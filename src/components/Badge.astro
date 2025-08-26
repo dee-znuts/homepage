@@ -1,0 +1,50 @@
+---
+import ChevronRight from "@/assets/svg/chevron-right.svg";
+
+interface Props {
+	text: string;
+	href: string;
+}
+
+const { text, href } = Astro.props;
+---
+
+<a class="badge" {href}>
+	{text}
+	<ChevronRight width={24} height={24} />
+</a>
+<style>
+	.badge {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: .75rem;
+		background-color: var(--secondary);
+		border-radius: 99px;
+		text-decoration: none;
+		color: black;
+		padding: .5rem .75rem;
+		width: fit-content;
+		transition: all .15s ease;
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+	}
+
+	.badge svg {
+		position: relative;
+		left: -0.125rem;
+		transition: all .15s ease;
+	}
+
+	.badge:focus-visible {
+		outline: 2px solid orange;
+	}
+
+	.badge:hover {
+		background-color: color-mix(in srgb, var(--secondary) 80%, transparent 20%);
+	}
+
+	.badge:hover svg, .badge:focus-visible svg {
+		left: 0;
+	}
+</style>

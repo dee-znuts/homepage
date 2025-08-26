@@ -1,0 +1,151 @@
+<canvas class="peanut-canvas"></canvas>
+<script>
+	import * as THREE from 'three';
+	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+	import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+	import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+	import { RenderPixelatedPass } from 'three/addons/postprocessing/RenderPixelatedPass.js';
+
+	const parent = document.querySelector<HTMLCanvasElement>(".hero")!;
+
+	const parentWidth = parent.getBoundingClientRect().width;
+
+	const canvas = document.querySelector<HTMLCanvasElement>(".peanut-canvas")!;
+
+	const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+
+	const actualWidth = (parentWidth / 2) - 128;
+
+	renderer.setSize(actualWidth, actualWidth);
+
+	const scene = new THREE.Scene();
+
+	const camera = new THREE.PerspectiveCamera(
+		50,
+		1,
+		0.1,
+		1000
+	);
+
+	const light = new THREE.HemisphereLight(0xffffff, 0x080820, 1);
+	scene.add(light);
+
+	const pointedLight = new THREE.PointLight(0xffffff, 1, 0, -.5);
+	pointedLight.position.set(-32, -32, 0);
+	scene.add(pointedLight);
+
+	camera.position.set(-36, -36, 0);
+	camera.lookAt(0, 0, 0);
+
+	const loader = new GLTFLoader();
+
+	let model: THREE.Group;
+
+	loader.load('/peanut/scene.gltf', (gltf) => {
+		model = gltf.scene;
+
+		model.position.set(0, 0, 5);
+		model.rotateX(0.85);
+		model.rotateY(3);
+		model.rotateZ(-2.2);
+
+		model.addEventListener("added", () => setTimeout(() => canvas.classList.add("loaded"), 500));
+
+		scene.add(model);
+	});
+
+	const composer = new EffectComposer(renderer);
+
+	const colors = [
+		new THREE.Color(0x292831),
+		new THREE.Color(0x333f58),
+		new THREE.Color(0x4a7a96),
+		new THREE.Color(0xee8695),
+		new THREE.Color(0xfbbbad),
+	];
+
+	const colorShader = {
+		uniforms: {
+			"tDiffuse": { value: null },
+			"palette": { value: colors },
+			"paletteSize": { value: 5 },
+		},
+		vertexShader: /* glsl */`
+			varying vec2 vUv;
+			void main() {
+				vUv = uv;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+			}
+		`,
+		fragmentShader: /* glsl */`
+			uniform sampler2D tDiffuse;
+			uniform vec3 palette[${colors.length}];
+			uniform int paletteSize;
+			varying vec2 vUv;
+
+			void main() {
+				vec4 texColor = texture2D(tDiffuse, vUv);
+				if (texColor.a < 0.1) discard;
+
+				vec3 color = texColor.rgb;
+
+				float minDist = 1e9;
+				vec3 nearest = color;
+
+				for (int i = 0; i < ${colors.length}; i++) {
+					if (i >= paletteSize) break;
+
+					vec3 pal = palette[i]; // keep palette in same space
+					float dist = distance(color, pal);
+					if (dist < minDist) {
+						minDist = dist;
+						nearest = pal;
+					}
+				}
+
+				gl_FragColor = vec4(nearest, 1.0);
+			}
+		`
+	};
+
+	const effect3 = new RenderPixelatedPass(2.5, scene, camera);
+	composer.addPass(effect3);
+
+	const effect4 = new ShaderPass(colorShader);
+	composer.addPass(effect4);
+
+	function animate() {
+		if (model) {
+			const time = Date.now() * 0.001;
+			model.position.y = Math.sin(time) * 2;
+			model.rotation.x += Math.sin(time) * 0.00005;
+			model.rotation.y += Math.sin(time) * 0.00005;
+		}
+
+		composer.render();
+	}
+
+	renderer.setAnimationLoop(animate);
+
+	window.addEventListener('resize', function () {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize(window.innerWidth, window.innerHeight);
+	});
+</script>
+<style>
+	.peanut-canvas {
+		width: calc((100% / 2) - 8rem);
+		filter: sepia(.2) hue-rotate(0deg);
+		position: relative;
+		top: 5rem;
+		transition: all 2s ease;
+		opacity: 0;
+	}
+
+	.peanut-canvas.loaded {
+		top: 0;
+		opacity: .75;
+	}
+</style>

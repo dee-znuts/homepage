@@ -1,5 +1,29 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+	site: "https://dee-znuts.live",
+	output: "static",
+	experimental: {
+		fonts: [
+			{
+				provider: fontProviders.google(),
+				name: "DM Serif Display",
+				cssVariable: "--font-dm-serif-display",
+				display: "swap",
+				fallbacks: ["Times New Roman"],
+				styles: ["normal", "italic"]
+			},
+			{
+				provider: fontProviders.google(),
+				name: "DM Sans",
+				cssVariable: "--font-dm-sans",
+				display: "swap",
+				weights: [200, 400],
+				fallbacks: ["sans-serif"],
+				styles: ["normal"]
+			},
+		]
+	}
+});

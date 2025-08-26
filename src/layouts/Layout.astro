@@ -1,0 +1,58 @@
+---
+import '@/styles/global.css';
+import { Font } from "astro:assets";
+
+import Navbar from "@/components/Navbar.astro";
+
+interface Props {
+	title: string;
+	description?: string;
+	image?: string | false;
+}
+
+// TODO: Change
+let { title, description = "This is a generic description", image = "/og.png" } = Astro.props;
+
+if (title !== "DEE-ZNUTS") {
+	title += " | DEE-ZNUTS";
+}
+---
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<Font cssVariable='--font-dm-sans' preload />
+		<Font cssVariable='--font-dm-serif-display' preload />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#ed9da8">
+
+		<!-- TODO -->
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<link rel="canonical" href={Astro.site} />
+		
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		{image !== undefined && image !== false && (<meta property="og:image" content={image} />)}
+		<meta property="og:url" content={Astro.site} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="en" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		{image !== undefined && image !== false && (<meta name="twitter:image" content={image} />)}
+		
+		<!-- TODO -->
+		<meta name="keywords" content="" />
+	
+		<slot name="head" />
+	</head>
+	<body>
+		<Navbar />
+		<slot />
+	</body>
+</html>

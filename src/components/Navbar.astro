@@ -1,0 +1,49 @@
+---
+const path = Astro.url.pathname;
+---
+<nav>
+	<ul>
+		<li><a href="/" class:list={{ active: path === "/" }}>Home</a></li>
+		<li><a href="/work" class:list={{ active: path === "/work" }}>Work</a></li>
+		<li><a href="/memes" class:list={{ active: path === "/memes" }}>Memes</a></li>
+		<li><a href="/about" class:list={{ active: path === "/about" }}>About</a></li>
+	</ul>
+</nav>
+<style>
+	nav {
+		padding: 4px;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		top: 32px;
+		border-radius: 99px;
+		background: #FFF;
+	}
+
+	ul {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 32px;
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #000;
+	}
+
+	a {
+		text-decoration: none;
+		color: black;
+		padding: 8px 12px;
+	}
+
+	a.active {
+		border-radius: 99px;
+		background: var(--secondary);
+	}
+</style>

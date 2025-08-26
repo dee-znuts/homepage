@@ -1,16 +1,48 @@
 ---
-
+import Badge from "@/components/Badge.astro";
+import Peanut from "@/components/Peanut.astro";
+import CTAButton from "@/components/CTAButton.astro";
+import Layout from "@/layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="DEE-ZNUTS">
+	<section class="hero">
+		<div class="hero-text">
+			<!-- TODO: Make modifiable via content collection -->
+			<Badge text="Unlimited Lang Works out now!" href="/work/unlimited-lang-works" />
+			<h1>
+				Making completely useless Integrations for <span class="serif italic">shits and giggles</span>
+			</h1>
+			<p>The Domain Expansion Extendable Zoomers-Notoriety Unification Tech Summit strives every day to bring the Astro community the worst integrations you can think of.</p>
+			<CTAButton text="Read more" chevronDir="down" />
+		</div>
+		<Peanut />
+	</section>
+</Layout>
+<style>
+	.hero {
+		padding: 4rem 8rem;
+		display: flex;
+		background: var(--background-light);
+		padding-top: 8rem;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.hero-text {
+		width: calc(50% - 4rem);
+		min-width: 840px;
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	h1 {
+		font-size: 90px;
+		margin: 0;
+	}
+
+	.hero-text p {
+		font-size: 1.5em;
+	}
+</style>

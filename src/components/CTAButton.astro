@@ -1,0 +1,87 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import ChevronRight from "@/assets/svg/chevron-right.svg";
+
+interface Props extends HTMLAttributes<'button'> {
+	text: string;
+	chevronDir: 'right' | 'down';
+}
+
+const { text, chevronDir, ...props } = Astro.props;
+---
+
+<button {...props}>
+	{text}
+	<div class="chevron-container" class:list={[chevronDir]}>
+		<div class="hover-container">
+			<ChevronRight width={24} height={24} />
+		</div>
+		<ChevronRight width={24} height={24} />
+	</div>
+</button>
+<style>
+	button {
+		display: flex;
+		flex-direction: row;
+		gap: .75rem;
+		align-items: center;
+		font-size: 1.5em;
+		font-weight: bold;
+		cursor: pointer;
+		width: fit-content;
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+		border-radius: 99px;
+	}
+
+	button:focus-visible {
+		outline: 2px solid orange;
+	}
+
+	.chevron-container {
+		width: 40px;
+		height: 40px;
+		border-radius: 99px;
+		background-color: var(--tertiary);
+		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.chevron-container.down {
+		transform: rotate(90deg);
+	}
+
+	.hover-container {
+		width: 40px;
+		height: 40px;
+		border-radius: 99px;
+		background-color: var(--primary);
+		color: black;
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		left: -50%;
+		top: 50%;
+		transform: translate(-50%, -50%) scale(.5);
+		transition: all .3s ease;
+	}
+
+	button:hover .hover-container, button:focus-visible .hover-container {
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%) scale(1);
+	}
+
+	.chevron-container > svg {
+		transition: all .3s ease;
+	}
+
+	button:hover .chevron-container > svg, button:focus-visible .chevron-container > svg {
+		transform: translateX(100%) scale(.5);
+	}
+</style>
