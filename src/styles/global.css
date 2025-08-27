@@ -11,10 +11,13 @@
 	--tertiary: #4f435b;
 }
 
+* {
+	font-family: var(--font-dm-sans);
+}
+
 html {
 	color-scheme: light;
 	accent-color: var(--primary);
-	font-family: var(--font-dm-sans);
 }
 
 html,
