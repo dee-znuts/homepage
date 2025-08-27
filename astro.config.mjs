@@ -8,7 +8,7 @@ export default defineConfig({
 	experimental: {
 		fonts: [
 			{
-				provider: fontProviders.google(),
+				provider: fontProviders.fontsource(),
 				name: "DM Serif Display",
 				cssVariable: "--font-dm-serif-display",
 				display: "swap",
@@ -16,8 +16,8 @@ export default defineConfig({
 				styles: ["normal", "italic"]
 			},
 			{
-				provider: fontProviders.google(),
-				name: "DM Sans",
+				provider: fontProviders.fontsource(),
+				name: "DM Sans Variable",
 				cssVariable: "--font-dm-sans",
 				display: "swap",
 				weights: [200, 400],
