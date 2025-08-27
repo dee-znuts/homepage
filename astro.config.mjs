@@ -17,10 +17,10 @@ export default defineConfig({
 			},
 			{
 				provider: fontProviders.fontsource(),
-				name: "DM Sans Variable",
+				name: "DM Sans",
 				cssVariable: "--font-dm-sans",
 				display: "swap",
-				weights: [200, 400],
+				weights: [200, 400, 700],
 				fallbacks: ["sans-serif"],
 				styles: ["normal"]
 			},
