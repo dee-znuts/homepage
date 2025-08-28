@@ -3,16 +3,21 @@ import ChevronRight from "@/assets/svg/chevron-right.svg";
 
 interface Props {
 	text: string;
-	href: string;
+	href?: string;
 }
 
 const { text, href } = Astro.props;
+
+const Tag = href ? 'a' : 'div';
 ---
 
-<a class="badge" {href}>
+<Tag class="badge" {href}>
+	<slot />
 	{text}
-	<ChevronRight width={24} height={24} />
-</a>
+	{href && (
+		<ChevronRight width={24} height={24} />
+	)}
+</Tag>
 <style>
 	.badge {
 		display: flex;
