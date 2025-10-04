@@ -5,10 +5,12 @@
 }
 
 :root {
-	--background-light: #FFF5F3;
-	--primary: #ED9DA8;
+	--background-light: #fff5f3;
+	--primary: #ed9da8;
 	--secondary: #fcdbd4;
 	--tertiary: #4f435b;
+	--background-light-2: #1F1D1C;
+	--background-light-3: #070B10;
 }
 
 * {
@@ -42,7 +44,7 @@ code {
 
 h1 {
 	margin-block: 0.67em;
-  font-size: 2em;
+	font-size: 2em;
 }
 
 h1,

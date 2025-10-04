@@ -1,8 +1,8 @@
 ---
 import '@/styles/global.css';
-import { Font } from "astro:assets";
-
-import Navbar from "@/components/Navbar.astro";
+import { Font } from 'astro:assets';
+import FakeCookieBanner from '@/components/FakeCookieBanner.astro';
+import Navbar from '@/components/Navbar.astro';
 
 interface Props {
 	title: string;
@@ -11,10 +11,10 @@ interface Props {
 }
 
 // TODO: Change
-let { title, description = "This is a generic description", image = "/og.png" } = Astro.props;
+let { title, description = 'This is a generic description', image = '/og.png' } = Astro.props;
 
-if (title !== "DEE-ZNUTS") {
-	title += " | DEE-ZNUTS";
+if (title !== 'DEE-ZNUTS') {
+	title += ' | DEE-ZNUTS';
 }
 ---
 
@@ -33,7 +33,7 @@ if (title !== "DEE-ZNUTS") {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
 		<link rel="canonical" href={Astro.site} />
-		
+
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		{image !== undefined && image !== false && (<meta property="og:image" content={image} />)}
@@ -45,13 +45,14 @@ if (title !== "DEE-ZNUTS") {
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		{image !== undefined && image !== false && (<meta name="twitter:image" content={image} />)}
-		
+
 		<!-- TODO -->
 		<meta name="keywords" content="" />
-	
+
 		<slot name="head" />
 	</head>
 	<body>
+		<FakeCookieBanner />
 		<Navbar />
 		<slot />
 	</body>
