@@ -1,0 +1,47 @@
+<div class="loading-screen-wrapper visible">
+	<div class="loading-screen">
+		<span>[[ sick loading screen ]]</span>
+	</div>
+</div>
+<style>
+	.loading-screen-wrapper {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 0;
+		width: 100dvw;
+		z-index: 1000;
+		background-color: var(--background-light-2);
+		overflow: hidden;
+		transition: height .5s ease-out;
+	}
+
+	.loading-screen-wrapper.visible {
+		height: 100dvh;
+	}
+
+	.loading-screen {
+		width: 100dvw;
+		height: 100dvh;
+		pointer-events: none;
+	}
+
+	.loading-screen {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-size: 4em;
+	}
+
+	.loading-screen span {
+		font-family: var(--font-dm-serif-display);
+	}
+</style>
+<script>
+	document.addEventListener("model-loaded", () => {
+		const loadingScreenWrapper = document.querySelector<HTMLDivElement>(".loading-screen-wrapper")!;
+		loadingScreenWrapper.classList.remove("visible");
+		setTimeout(() => document.dispatchEvent(new CustomEvent("site-loaded")), 100);
+	});
+</script>

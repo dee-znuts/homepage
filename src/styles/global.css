@@ -9,8 +9,8 @@
 	--primary: #ed9da8;
 	--secondary: #fcdbd4;
 	--tertiary: #4f435b;
-	--background-light-2: #1F1D1C;
-	--background-light-3: #070B10;
+	--background-light-2: #1f1d1c;
+	--background-light-3: #070b10;
 }
 
 * {
@@ -25,6 +25,11 @@ html {
 html,
 body {
 	margin: 0;
+}
+
+html:has(.loading-screen-wrapper.visible),
+body:has(.loading-screen-wrapper.visible) {
+	overflow: hidden;
 }
 
 body {
@@ -65,7 +70,8 @@ button {
 	padding: 0;
 }
 
-.serif {
+.serif,
+.serif > * {
 	font-family: var(--font-dm-serif-display);
 }
 

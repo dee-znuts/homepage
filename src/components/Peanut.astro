@@ -1,15 +1,15 @@
 <canvas class="peanut-canvas"></canvas>
 <script>
 	import type { Group } from "three";
-	import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 	async function main() {
-		const [THREE, { GLTFLoader }, { EffectComposer }, { ShaderPass }, { RenderPixelatedPass }] = await Promise.all([
+		const [THREE, { GLTFLoader }, { EffectComposer }, { ShaderPass }, { RenderPixelatedPass }, { OrbitControls }] = await Promise.all([
 			import("three"),
 			import("three/examples/jsm/loaders/GLTFLoader.js"),
 			import("three/addons/postprocessing/EffectComposer.js"),
 			import("three/addons/postprocessing/ShaderPass.js"),
 			import("three/addons/postprocessing/RenderPixelatedPass.js"),
+			import("three/examples/jsm/Addons.js")
 		]);
 
 		const parent = document.querySelector<HTMLCanvasElement>(".hero")!;
@@ -60,7 +60,15 @@
 			model.rotateY(3);
 			model.rotateZ(-2.2);
 
-			model.addEventListener("added", () => setTimeout(() => canvas.classList.add("loaded"), 500));
+			model.addEventListener("added", () => {
+				setTimeout(() => {
+					canvas.classList.add("loaded");
+				}, 1000);
+
+				setTimeout(() => {
+					document.dispatchEvent(new CustomEvent("model-loaded"));
+				}, 100);
+			});
 
 			scene.add(model);
 		});
@@ -156,7 +164,7 @@
 		transform: translateX(-112.5%);
 		top: calc(16vh - 5rem);
 		transition: all 2s ease;
-		opacity: 0;
+		opacity: 0.01;
 	}
 
 	.peanut-canvas.loaded {

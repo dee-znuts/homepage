@@ -2,6 +2,7 @@
 import '@/styles/global.css';
 import { Font } from 'astro:assets';
 import FakeCookieBanner from '@/components/FakeCookieBanner.astro';
+import LoadingScreen from '@/components/LoadingScreen.astro';
 import Navbar from '@/components/Navbar.astro';
 
 interface Props {
@@ -52,6 +53,7 @@ if (title !== 'DEE-ZNUTS') {
 		<slot name="head" />
 	</head>
 	<body>
+		<LoadingScreen />
 		<FakeCookieBanner />
 		<Navbar />
 		<slot />
